@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes glitchLow {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitchMedium {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitchHigh {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-3px, 3px); }
+  40% { transform: translate(-3px, -3px); }
+  60% { transform: translate(3px, 3px); }
+  80% { transform: translate(3px, -3px); }
+}
+
+@layer utilities {
+  .animate-glitch-low {
+    animation: glitchLow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  }
+  
+  .animate-glitch-medium {
+    animation: glitchMedium 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  }
+  
+  .animate-glitch-high {
+    animation: glitchHigh 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  }
+}
+
+@layer base {
+  :root {
+    --neon-pink: rgb(255, 0, 153);
+    --neon-blue: rgb(0, 200, 255);
+    --neon-green: rgb(0, 255, 136);
+    --neon-purple: rgb(190, 0, 255);
+    --neon-yellow: rgb(255, 230, 0);
+    --glass-bg: rgba(20, 20, 30, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shine: rgba(255, 255, 255, 0.05);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased text-foreground;
+    background: linear-gradient(135deg, #0f0f20 0%, #171728 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 10% 10%, rgba(255, 0, 153, 0.15), transparent 20%),
+      radial-gradient(circle at 90% 5%, rgba(0, 200, 255, 0.1), transparent 25%),
+      radial-gradient(circle at 10% 90%, rgba(190, 0, 255, 0.1), transparent 20%),
+      radial-gradient(circle at 80% 80%, rgba(0, 255, 136, 0.15), transparent 30%);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+@layer components {
+  /* Glass panel effect */
+  .glass-panel {
+    @apply backdrop-blur-md relative border overflow-hidden rounded-lg;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-shine), transparent);
+    transform: translateY(-5px);
+  }
+
+  /* Neon text effects */
+  .neon-text-pink {
+    @apply font-bold tracking-wider;
+    color: white;
+    text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 15px var(--neon-pink);
+  }
+  
+  .neon-text-blue {
+    @apply font-bold tracking-wider;
+    color: white;
+    text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue);
+  }
+  
+  .neon-text-green {
+    @apply font-bold tracking-wider;
+    color: white;
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 15px var(--neon-green);
+  }
+
+  /* Cyberpunk border */
+  .cyber-border {
+    @apply relative rounded-md;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+                linear-gradient(135deg, var(--neon-pink), var(--neon-blue)) border-box;
+  }
+
+  /* Animation utility classes */
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 15px rgba(var(--neon-pink), 0.7);
+  }
+}
